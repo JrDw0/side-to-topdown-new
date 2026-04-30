@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ModeIceArea.gd" id="1_ice"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ice"]
+size = Vector2(260, 42)
+
+[node name="ModeIceArea" type="Node2D"]
+script = ExtResource("1_ice")
+
+[node name="Visual" type="Polygon2D" parent="."]
+color = Color(0.42, 0.95, 1, 0.42)
+polygon = PackedVector2Array(-130, -21, 130, -21, 130, 21, -130, 21)
+
+[node name="IceArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="IceArea"]
+shape = SubResource("RectangleShape2D_ice")
+
+[node name="SolidBody" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SolidBody"]
+shape = SubResource("RectangleShape2D_ice")

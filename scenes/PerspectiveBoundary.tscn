@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/PerspectiveBoundary.gd" id="1_boundary"]
+
+[node name="PerspectiveBoundary" type="Node2D"]
+script = ExtResource("1_boundary")
+
+[node name="InitialLine" type="Node2D" parent="."]
+
+[node name="Start" type="Marker2D" parent="InitialLine"]
+position = Vector2(245, 60)
+
+[node name="End" type="Marker2D" parent="InitialLine"]
+position = Vector2(315, 660)
+
+[node name="AdvancedLine" type="Node2D" parent="."]
+
+[node name="Start" type="Marker2D" parent="AdvancedLine"]
+position = Vector2(1040, 60)
+
+[node name="End" type="Marker2D" parent="AdvancedLine"]
+position = Vector2(1110, 660)
+
+[node name="TargetLine" type="Line2D" parent="."]
+width = 5.0
+default_color = Color(1, 1, 1, 0.18)
+texture_mode = 1
+
+[node name="ActiveLine" type="Line2D" parent="."]
+width = 8.0
+default_color = Color(1, 0.95, 0.2, 1)
+texture_mode = 1

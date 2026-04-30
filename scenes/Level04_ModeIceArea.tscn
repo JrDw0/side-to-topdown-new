@@ -1,0 +1,112 @@
+[gd_scene load_steps=14 format=3]
+
+[ext_resource type="Script" path="res://scripts/Level.gd" id="1_level"]
+[ext_resource type="Script" path="res://scripts/PerspectiveController.gd" id="2_controller"]
+[ext_resource type="Script" path="res://scripts/ModeBackdrop.gd" id="3_backdrop"]
+[ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="4_player"]
+[ext_resource type="PackedScene" path="res://scenes/PerspectiveSwitch.tscn" id="5_switch"]
+[ext_resource type="PackedScene" path="res://scenes/Goal.tscn" id="6_goal"]
+[ext_resource type="PackedScene" path="res://scenes/ModeIceArea.tscn" id="7_ice"]
+[ext_resource type="Script" path="res://scripts/PerspectiveCamera.gd" id="8_camera"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_left_floor"]
+size = Vector2(500, 52)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_right_floor"]
+size = Vector2(500, 52)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_left_bound"]
+size = Vector2(34, 720)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_right_bound"]
+size = Vector2(34, 720)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ceiling"]
+size = Vector2(1280, 32)
+
+[node name="Level04_ModeIceArea" type="Node2D"]
+script = ExtResource("1_level")
+
+[node name="ModeBackdrop" type="Node2D" parent="."]
+script = ExtResource("3_backdrop")
+
+[node name="PerspectiveController" type="Node" parent="."]
+script = ExtResource("2_controller")
+initial_mode = 1
+
+[node name="PitTint" type="Polygon2D" parent="."]
+color = Color(0.015, 0.02, 0.026, 1)
+polygon = PackedVector2Array(500, 640, 780, 640, 780, 720, 500, 720)
+
+[node name="LeftFloor" type="StaticBody2D" parent="."]
+position = Vector2(250, 666)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftFloor"]
+shape = SubResource("RectangleShape2D_left_floor")
+
+[node name="Visual" type="Polygon2D" parent="LeftFloor"]
+color = Color(0.7, 0.74, 0.78, 1)
+polygon = PackedVector2Array(-250, -26, 250, -26, 250, 26, -250, 26)
+
+[node name="RightFloor" type="StaticBody2D" parent="."]
+position = Vector2(1030, 666)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightFloor"]
+shape = SubResource("RectangleShape2D_right_floor")
+
+[node name="Visual" type="Polygon2D" parent="RightFloor"]
+color = Color(0.7, 0.74, 0.78, 1)
+polygon = PackedVector2Array(-250, -26, 250, -26, 250, 26, -250, 26)
+
+[node name="LeftBoundary" type="StaticBody2D" parent="."]
+position = Vector2(-17, 360)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftBoundary"]
+shape = SubResource("RectangleShape2D_left_bound")
+
+[node name="RightBoundary" type="StaticBody2D" parent="."]
+position = Vector2(1297, 360)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightBoundary"]
+shape = SubResource("RectangleShape2D_right_bound")
+
+[node name="CeilingBoundary" type="StaticBody2D" parent="."]
+position = Vector2(640, -16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CeilingBoundary"]
+shape = SubResource("RectangleShape2D_ceiling")
+
+[node name="ModeIceArea" parent="." instance=ExtResource("7_ice")]
+position = Vector2(640, 640)
+
+[node name="PerspectiveSwitch" parent="." instance=ExtResource("5_switch")]
+position = Vector2(280, 600)
+
+[node name="Goal" parent="." instance=ExtResource("6_goal")]
+position = Vector2(1110, 592)
+active_mode = 0
+next_scene_path = "res://scenes/Level05_FlyingTrap.tscn"
+
+[node name="Player" parent="." instance=ExtResource("4_player")]
+position = Vector2(145, 600)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+script = ExtResource("8_camera")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="WinLabel" type="Label" parent="CanvasLayer"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -24.0
+offset_right = 120.0
+offset_bottom = 24.0
+text = "通关"
+horizontal_alignment = 1
+vertical_alignment = 1

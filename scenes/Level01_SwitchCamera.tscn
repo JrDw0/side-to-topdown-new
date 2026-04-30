@@ -1,0 +1,97 @@
+[gd_scene load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://scripts/Level.gd" id="1_level"]
+[ext_resource type="Script" path="res://scripts/PerspectiveController.gd" id="2_controller"]
+[ext_resource type="Script" path="res://scripts/ModeBackdrop.gd" id="3_backdrop"]
+[ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="4_player"]
+[ext_resource type="PackedScene" path="res://scenes/PerspectiveSwitch.tscn" id="5_switch"]
+[ext_resource type="PackedScene" path="res://scenes/ModeWall.tscn" id="6_wall"]
+[ext_resource type="PackedScene" path="res://scenes/Goal.tscn" id="7_goal"]
+[ext_resource type="Script" path="res://scripts/PerspectiveCamera.gd" id="8_camera"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
+size = Vector2(1200, 52)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_left_bound"]
+size = Vector2(34, 720)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_right_bound"]
+size = Vector2(34, 720)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ceiling"]
+size = Vector2(1280, 32)
+
+[node name="Level01_SwitchCamera" type="Node2D"]
+script = ExtResource("1_level")
+
+[node name="ModeBackdrop" type="Node2D" parent="."]
+script = ExtResource("3_backdrop")
+
+[node name="PerspectiveController" type="Node" parent="."]
+script = ExtResource("2_controller")
+initial_mode = 0
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(640, 666)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("RectangleShape2D_floor")
+
+[node name="Visual" type="Polygon2D" parent="Floor"]
+color = Color(0.7, 0.74, 0.78, 1)
+polygon = PackedVector2Array(-600, -26, 600, -26, 600, 26, -600, 26)
+
+[node name="LeftBoundary" type="StaticBody2D" parent="."]
+position = Vector2(-17, 360)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftBoundary"]
+shape = SubResource("RectangleShape2D_left_bound")
+
+[node name="RightBoundary" type="StaticBody2D" parent="."]
+position = Vector2(1297, 360)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightBoundary"]
+shape = SubResource("RectangleShape2D_right_bound")
+
+[node name="CeilingBoundary" type="StaticBody2D" parent="."]
+position = Vector2(640, -16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CeilingBoundary"]
+shape = SubResource("RectangleShape2D_ceiling")
+
+[node name="PerspectiveSwitch" parent="." instance=ExtResource("5_switch")]
+position = Vector2(255, 600)
+
+[node name="SideModeGate" parent="." instance=ExtResource("6_wall")]
+position = Vector2(600, 575)
+scale = Vector2(1, 0.8)
+active_mode = 0
+
+[node name="Goal" parent="." instance=ExtResource("7_goal")]
+position = Vector2(1110, 592)
+active_mode = 1
+next_scene_path = "res://scenes/Level02_BoxPlatform.tscn"
+
+[node name="Player" parent="." instance=ExtResource("4_player")]
+position = Vector2(130, 611)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+script = ExtResource("8_camera")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="WinLabel" type="Label" parent="CanvasLayer"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -24.0
+offset_right = 120.0
+offset_bottom = 24.0
+text = "通关"
+horizontal_alignment = 1
+vertical_alignment = 1
