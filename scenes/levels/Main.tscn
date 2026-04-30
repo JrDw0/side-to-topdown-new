@@ -1,13 +1,13 @@
 [gd_scene load_steps=13 format=3]
 
 [ext_resource type="Script" path="res://scripts/Level.gd" id="1_level"]
-[ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="2_player"]
-[ext_resource type="PackedScene" path="res://scenes/Box.tscn" id="3_box"]
-[ext_resource type="PackedScene" path="res://scenes/PerspectiveBoundary.tscn" id="4_boundary"]
-[ext_resource type="PackedScene" path="res://scenes/BoundarySwitch.tscn" id="5_switch"]
-[ext_resource type="PackedScene" path="res://scenes/ModeWall.tscn" id="6_wall"]
-[ext_resource type="PackedScene" path="res://scenes/Hazard.tscn" id="7_hazard"]
-[ext_resource type="PackedScene" path="res://scenes/Goal.tscn" id="8_goal"]
+[ext_resource type="PackedScene" path="res://scenes/actors/Player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/objects/Box.tscn" id="3_box"]
+[ext_resource type="PackedScene" path="res://scenes/mechanics/PerspectiveBoundary.tscn" id="4_boundary"]
+[ext_resource type="PackedScene" path="res://scenes/mechanics/BoundarySwitch.tscn" id="5_switch"]
+[ext_resource type="PackedScene" path="res://scenes/mechanics/ModeWall.tscn" id="6_wall"]
+[ext_resource type="PackedScene" path="res://scenes/objects/Hazard.tscn" id="7_hazard"]
+[ext_resource type="PackedScene" path="res://scenes/objects/Goal.tscn" id="8_goal"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_left_floor"]
 size = Vector2(350, 52)

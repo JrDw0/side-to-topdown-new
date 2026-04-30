@@ -3,13 +3,13 @@
 [ext_resource type="Script" uid="uid://blpmj6dyk4y3h" path="res://scripts/Level.gd" id="1_level"]
 [ext_resource type="Script" uid="uid://dxu64fm35kdhp" path="res://scripts/PerspectiveController.gd" id="2_controller"]
 [ext_resource type="Script" uid="uid://cugndu2cny5up" path="res://scripts/ModeBackdrop.gd" id="3_backdrop"]
-[ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="4_player"]
-[ext_resource type="PackedScene" path="res://scenes/PerspectiveSwitch.tscn" id="5_switch"]
-[ext_resource type="PackedScene" path="res://scenes/Goal.tscn" id="6_goal"]
-[ext_resource type="PackedScene" path="res://scenes/Box.tscn" id="7_box"]
-[ext_resource type="PackedScene" path="res://scenes/GroundEnemy.tscn" id="8_ground_enemy"]
+[ext_resource type="PackedScene" path="res://scenes/actors/Player.tscn" id="4_player"]
+[ext_resource type="PackedScene" path="res://scenes/mechanics/PerspectiveSwitch.tscn" id="5_switch"]
+[ext_resource type="PackedScene" path="res://scenes/objects/Goal.tscn" id="6_goal"]
+[ext_resource type="PackedScene" path="res://scenes/objects/Box.tscn" id="7_box"]
+[ext_resource type="PackedScene" path="res://scenes/actors/GroundEnemy.tscn" id="8_ground_enemy"]
 [ext_resource type="Script" uid="uid://clw1isornpnve" path="res://scripts/PerspectiveCamera.gd" id="9_camera"]
-[ext_resource type="PackedScene" path="res://scenes/ModeWall.tscn" id="10_wall"]
+[ext_resource type="PackedScene" path="res://scenes/mechanics/ModeWall.tscn" id="10_wall"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_left_floor"]
 size = Vector2(560, 52)
@@ -114,7 +114,7 @@ scale = Vector2(1, 2.35)
 
 [node name="Goal" parent="." instance=ExtResource("6_goal")]
 position = Vector2(1110, 592)
-next_scene_path = "res://scenes/Level04_ModeIceArea.tscn"
+next_scene_path = "res://scenes/levels/Level04_ModeIceArea.tscn"
 
 [node name="Player" parent="." instance=ExtResource("4_player")]
 position = Vector2(155, 520)
