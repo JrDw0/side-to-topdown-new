@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/FlyingEnemy.gd" id="1_flying_enemy"]
+[ext_resource type="Script" path="res://scripts/PerspectiveVisual.gd" id="2_visual"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_flying_enemy"]
 radius = 28.0
@@ -10,6 +11,11 @@ script = ExtResource("1_flying_enemy")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_flying_enemy")
+
+[node name="Shadow" type="Polygon2D" parent="."]
+z_index = -1
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-28, 0, -18, -8, 0, -11, 18, -8, 28, 0, 18, 8, 0, 11, -18, 8)
 
 [node name="Visual" type="Polygon2D" parent="."]
 color = Color(0.95, 0.32, 1, 1)
@@ -25,3 +31,16 @@ position = Vector2(-120, 0)
 
 [node name="SideRight" type="Marker2D" parent="."]
 position = Vector2(120, 0)
+
+[node name="PerspectiveVisual" type="Node2D" parent="."]
+script = ExtResource("2_visual")
+initial_mode = 1
+side_visual_scale = Vector2(1.0, 0.88)
+side_visual_offset = Vector2(0, -6)
+side_shadow_scale = Vector2(0.78, 0.3)
+side_shadow_offset = Vector2(0, 44)
+side_shadow_alpha = 0.18
+topdown_shadow_scale = Vector2(0.82, 0.5)
+topdown_shadow_offset = Vector2(10, 20)
+topdown_shadow_alpha = 0.18
+topdown_y_sort_offset = 18

@@ -4,7 +4,7 @@ class_name PerspectiveCamera
 const PerspectiveModes := preload("res://scripts/PerspectiveModes.gd")
 
 @export var controller_path: NodePath
-@export var transition_duration := 0.18
+@export var transition_duration := 0.22
 @export var side_zoom := Vector2(1.16, 1.16)
 @export var topdown_zoom := Vector2(0.92, 0.92)
 @export var side_offset := Vector2(0.0, 42.0)
@@ -69,9 +69,9 @@ func _apply_mode(animated: bool) -> void:
 			_flash_rect.color = clear_color
 		return
 
-	var flash_color := Color(0.72, 0.86, 1.0, 0.42)
+	var flash_color := Color(0.72, 0.86, 1.0, 0.26)
 	if _mode == PerspectiveModes.Mode.TOPDOWN:
-		flash_color = Color(0.45, 1.0, 0.78, 0.42)
+		flash_color = Color(0.45, 1.0, 0.78, 0.26)
 	if _flash_rect != null:
 		_flash_rect.color = flash_color
 

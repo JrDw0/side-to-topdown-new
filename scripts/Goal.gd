@@ -7,6 +7,7 @@ const PerspectiveModes := preload("res://scripts/PerspectiveModes.gd")
 
 @onready var visual: Polygon2D = $Visual
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
+@onready var perspective_visual: Node = get_node_or_null("PerspectiveVisual")
 
 var _mode: int = PerspectiveModes.Mode.TOPDOWN
 var _active := false
@@ -44,6 +45,8 @@ func _apply_state() -> void:
 	monitoring = _active
 	collision_shape.disabled = not _active
 	visual.modulate.a = 1.0 if _active else 0.24
+	if perspective_visual != null and perspective_visual.has_method("set_shadow_alpha_multiplier"):
+		perspective_visual.set_shadow_alpha_multiplier(1.0 if _active else 0.24)
 
 
 func _on_body_entered(body: Node2D) -> void:

@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_player"]
+[ext_resource type="Script" path="res://scripts/PerspectiveVisual.gd" id="2_visual"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_player"]
 size = Vector2(34, 58)
@@ -10,6 +11,11 @@ script = ExtResource("1_player")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_player")
+
+[node name="Shadow" type="Polygon2D" parent="."]
+z_index = -1
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-22, 0, -15, -7, 0, -10, 15, -7, 22, 0, 15, 7, 0, 10, -15, 7)
 
 [node name="Visual" type="Polygon2D" parent="."]
 color = Color(0.2, 0.55, 1, 1)
@@ -22,3 +28,14 @@ offset_right = 25.0
 offset_bottom = -28.0
 text = "SIDE"
 horizontal_alignment = 1
+
+[node name="PerspectiveVisual" type="Node2D" parent="."]
+script = ExtResource("2_visual")
+side_shadow_scale = Vector2(0.95, 0.34)
+side_shadow_offset = Vector2(0, 30)
+side_shadow_alpha = 0.26
+topdown_visual_scale = Vector2(1.08, 0.72)
+topdown_visual_offset = Vector2(0, 8)
+topdown_shadow_scale = Vector2(0.9, 0.55)
+topdown_shadow_offset = Vector2(8, 12)
+topdown_shadow_alpha = 0.21

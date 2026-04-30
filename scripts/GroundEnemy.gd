@@ -7,6 +7,7 @@ const PerspectiveModes := preload("res://scripts/PerspectiveModes.gd")
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var damage_area: Area2D = $DamageArea
 @onready var damage_shape: CollisionShape2D = $DamageArea/CollisionShape2D
+@onready var perspective_visual: Node = get_node_or_null("PerspectiveVisual")
 
 var _mode: int = PerspectiveModes.Mode.SIDE
 var _alive := true
@@ -31,7 +32,10 @@ func crush() -> bool:
 	_alive = false
 	_apply_state()
 	visual.color = Color(0.26, 0.28, 0.32, 0.65)
-	visual.scale.y = 0.32
+	if perspective_visual != null and perspective_visual.has_method("set_visual_scale_multiplier"):
+		perspective_visual.set_visual_scale_multiplier(Vector2(1.0, 0.32))
+	else:
+		visual.scale.y = 0.32
 	return true
 
 
@@ -53,14 +57,22 @@ func _apply_state() -> void:
 	damage_shape.disabled = not active
 
 	if not _alive:
+		_set_shadow_alpha_multiplier(0.18)
 		return
 
 	if active:
 		visual.color = Color(1.0, 0.24, 0.14, 1.0)
+		_set_shadow_alpha_multiplier(1.0)
 	else:
 		visual.color = Color(1.0, 0.24, 0.14, 0.28)
+		_set_shadow_alpha_multiplier(0.28)
 
 
 func _on_damage_body_entered(body: Node2D) -> void:
 	if _alive and _mode == PerspectiveModes.Mode.SIDE and body.has_method("reset_to_safe_point"):
 		body.reset_to_safe_point()
+
+
+func _set_shadow_alpha_multiplier(multiplier: float) -> void:
+	if perspective_visual != null and perspective_visual.has_method("set_shadow_alpha_multiplier"):
+		perspective_visual.set_shadow_alpha_multiplier(multiplier)
