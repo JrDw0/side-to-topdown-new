@@ -97,7 +97,7 @@ scale = Vector2(1, 0.8)
 active_mode = 0
 
 [node name="Goal" parent="." instance=ExtResource("7_goal")]
-position = Vector2(1114, 593)
+position = Vector2(1115, 593)
 next_scene_path = "res://scenes/Level02_BoxPlatform.tscn"
 
 [node name="Player" parent="." instance=ExtResource("4_player")]
