@@ -63,10 +63,10 @@ func _apply_visuals() -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
-	if body is Player:
+	if body.is_in_group("player"):
 		_player_inside = true
 
 
 func _on_body_exited(body: Node2D) -> void:
-	if body is Player:
+	if body.is_in_group("player"):
 		_player_inside = false

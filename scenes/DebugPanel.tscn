@@ -1,0 +1,103 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/DebugPanel.gd" id="1_debug_panel"]
+
+[node name="DebugPanel" type="Control"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_debug_panel")
+
+[node name="ExpandedPanel" type="PanelContainer" parent="."]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 376.0
+offset_bottom = 226.0
+mouse_filter = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="ExpandedPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ExpandedPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Header" type="HBoxContainer" parent="ExpandedPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="ExpandedPanel/MarginContainer/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "调试面板"
+
+[node name="CollapseButton" type="Button" parent="ExpandedPanel/MarginContainer/VBoxContainer/Header"]
+layout_mode = 2
+text = "收起"
+
+[node name="LevelRow" type="HBoxContainer" parent="ExpandedPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="LevelOption" type="OptionButton" parent="ExpandedPanel/MarginContainer/VBoxContainer/LevelRow"]
+custom_minimum_size = Vector2(220, 34)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="EnterButton" type="Button" parent="ExpandedPanel/MarginContainer/VBoxContainer/LevelRow"]
+custom_minimum_size = Vector2(92, 34)
+layout_mode = 2
+text = "进入关卡"
+
+[node name="FlowGrid" type="GridContainer" parent="ExpandedPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+columns = 3
+
+[node name="PreviousButton" type="Button" parent="ExpandedPanel/MarginContainer/VBoxContainer/FlowGrid"]
+custom_minimum_size = Vector2(104, 34)
+layout_mode = 2
+text = "上一关"
+
+[node name="NextButton" type="Button" parent="ExpandedPanel/MarginContainer/VBoxContainer/FlowGrid"]
+custom_minimum_size = Vector2(104, 34)
+layout_mode = 2
+text = "下一关"
+
+[node name="RestartButton" type="Button" parent="ExpandedPanel/MarginContainer/VBoxContainer/FlowGrid"]
+custom_minimum_size = Vector2(104, 34)
+layout_mode = 2
+text = "重开"
+
+[node name="FirstButton" type="Button" parent="ExpandedPanel/MarginContainer/VBoxContainer/FlowGrid"]
+custom_minimum_size = Vector2(104, 34)
+layout_mode = 2
+text = "首关"
+
+[node name="CompleteButton" type="Button" parent="ExpandedPanel/MarginContainer/VBoxContainer/FlowGrid"]
+custom_minimum_size = Vector2(104, 34)
+layout_mode = 2
+text = "标记通关"
+
+[node name="Spacer" type="Control" parent="ExpandedPanel/MarginContainer/VBoxContainer/FlowGrid"]
+custom_minimum_size = Vector2(104, 34)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="StatusLabel" type="Label" parent="ExpandedPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "当前关卡："
+
+[node name="CollapsedButton" type="Button" parent="."]
+visible = false
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 88.0
+offset_bottom = 50.0
+mouse_filter = 0
+text = "展开"
