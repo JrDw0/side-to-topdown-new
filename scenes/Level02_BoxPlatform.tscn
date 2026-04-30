@@ -1,19 +1,20 @@
-[gd_scene load_steps=14 format=3]
+[gd_scene load_steps=15 format=3 uid="uid://bxw76m45vn007"]
 
-[ext_resource type="Script" path="res://scripts/Level.gd" id="1_level"]
-[ext_resource type="Script" path="res://scripts/PerspectiveController.gd" id="2_controller"]
-[ext_resource type="Script" path="res://scripts/ModeBackdrop.gd" id="3_backdrop"]
+[ext_resource type="Script" uid="uid://blpmj6dyk4y3h" path="res://scripts/Level.gd" id="1_level"]
+[ext_resource type="Script" uid="uid://dxu64fm35kdhp" path="res://scripts/PerspectiveController.gd" id="2_controller"]
+[ext_resource type="Script" uid="uid://cugndu2cny5up" path="res://scripts/ModeBackdrop.gd" id="3_backdrop"]
 [ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="4_player"]
 [ext_resource type="PackedScene" path="res://scenes/PerspectiveSwitch.tscn" id="5_switch"]
 [ext_resource type="PackedScene" path="res://scenes/Goal.tscn" id="6_goal"]
 [ext_resource type="PackedScene" path="res://scenes/Box.tscn" id="7_box"]
-[ext_resource type="Script" path="res://scripts/PerspectiveCamera.gd" id="8_camera"]
+[ext_resource type="Script" uid="uid://clw1isornpnve" path="res://scripts/PerspectiveCamera.gd" id="8_camera"]
+[ext_resource type="PackedScene" path="res://scenes/ModeWall.tscn" id="9_wall"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_left_floor"]
 size = Vector2(500, 52)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_right_floor"]
-size = Vector2(520, 52)
+size = Vector2(500, 52)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_left_bound"]
 size = Vector2(34, 720)
@@ -36,11 +37,12 @@ initial_mode = 1
 
 [node name="PitTint" type="Polygon2D" parent="."]
 color = Color(0.015, 0.02, 0.026, 1)
-polygon = PackedVector2Array(500, 640, 760, 640, 760, 720, 500, 720)
+polygon = PackedVector2Array(500, 640, 780, 640, 780, 720, 500, 720)
 
 [node name="BoxTarget" type="Polygon2D" parent="."]
-color = Color(1, 0.9, 0.18, 0.22)
-polygon = PackedVector2Array(570, 600, 690, 600, 690, 648, 570, 648)
+visible = false
+color = Color(1, 0.9, 0.18, 0.24)
+polygon = PackedVector2Array(580, 600, 700, 600, 700, 648, 580, 648)
 
 [node name="LeftFloor" type="StaticBody2D" parent="."]
 position = Vector2(250, 666)
@@ -53,14 +55,14 @@ color = Color(0.7, 0.74, 0.78, 1)
 polygon = PackedVector2Array(-250, -26, 250, -26, 250, 26, -250, 26)
 
 [node name="RightFloor" type="StaticBody2D" parent="."]
-position = Vector2(1020, 666)
+position = Vector2(1030, 666)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightFloor"]
 shape = SubResource("RectangleShape2D_right_floor")
 
 [node name="Visual" type="Polygon2D" parent="RightFloor"]
 color = Color(0.7, 0.74, 0.78, 1)
-polygon = PackedVector2Array(-260, -26, 260, -26, 260, 26, -260, 26)
+polygon = PackedVector2Array(-250, -26, 250, -26, 250, 26, -250, 26)
 
 [node name="LeftBoundary" type="StaticBody2D" parent="."]
 position = Vector2(-17, 360)
@@ -81,21 +83,23 @@ position = Vector2(640, -16)
 shape = SubResource("RectangleShape2D_ceiling")
 
 [node name="Box" parent="." instance=ExtResource("7_box")]
-position = Vector2(420, 624)
-box_kind = 0
-min_position = Vector2(330, 560)
+position = Vector2(365, 520)
+min_position = Vector2(330, 500)
 max_position = Vector2(700, 650)
 
 [node name="PerspectiveSwitch" parent="." instance=ExtResource("5_switch")]
-position = Vector2(305, 600)
+position = Vector2(470, 590)
+
+[node name="TopdownRouteLock" parent="." instance=ExtResource("9_wall")]
+position = Vector2(790, 535)
+scale = Vector2(1, 5.47)
 
 [node name="Goal" parent="." instance=ExtResource("6_goal")]
 position = Vector2(1110, 592)
-active_mode = 0
 next_scene_path = "res://scenes/Level03_BoxCrush.tscn"
 
 [node name="Player" parent="." instance=ExtResource("4_player")]
-position = Vector2(145, 600)
+position = Vector2(130, 500)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(640, 360)

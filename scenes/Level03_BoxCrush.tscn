@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3]
+[gd_scene load_steps=17 format=3]
 
 [ext_resource type="Script" path="res://scripts/Level.gd" id="1_level"]
 [ext_resource type="Script" path="res://scripts/PerspectiveController.gd" id="2_controller"]
@@ -9,9 +9,16 @@
 [ext_resource type="PackedScene" path="res://scenes/Box.tscn" id="7_box"]
 [ext_resource type="PackedScene" path="res://scenes/GroundEnemy.tscn" id="8_ground_enemy"]
 [ext_resource type="Script" path="res://scripts/PerspectiveCamera.gd" id="9_camera"]
+[ext_resource type="PackedScene" path="res://scenes/ModeWall.tscn" id="10_wall"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
-size = Vector2(1200, 52)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_left_floor"]
+size = Vector2(560, 52)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mid_floor"]
+size = Vector2(340, 52)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_right_floor"]
+size = Vector2(430, 52)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_left_bound"]
 size = Vector2(34, 720)
@@ -32,19 +39,43 @@ script = ExtResource("3_backdrop")
 script = ExtResource("2_controller")
 initial_mode = 1
 
+[node name="UpperLaneTint" type="Polygon2D" parent="."]
+color = Color(0.94, 0.58, 0.24, 0.13)
+polygon = PackedVector2Array(450, 300, 820, 300, 820, 380, 450, 380)
+
 [node name="CrushTarget" type="Polygon2D" parent="."]
-color = Color(1, 0.9, 0.18, 0.2)
+color = Color(1, 0.9, 0.18, 0.24)
 polygon = PackedVector2Array(690, 300, 820, 300, 820, 380, 690, 380)
 
-[node name="Floor" type="StaticBody2D" parent="."]
-position = Vector2(640, 666)
+[node name="LeftFloor" type="StaticBody2D" parent="."]
+position = Vector2(280, 666)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
-shape = SubResource("RectangleShape2D_floor")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftFloor"]
+shape = SubResource("RectangleShape2D_left_floor")
 
-[node name="Visual" type="Polygon2D" parent="Floor"]
+[node name="Visual" type="Polygon2D" parent="LeftFloor"]
 color = Color(0.7, 0.74, 0.78, 1)
-polygon = PackedVector2Array(-600, -26, 600, -26, 600, 26, -600, 26)
+polygon = PackedVector2Array(-280, -26, 280, -26, 280, 26, -280, 26)
+
+[node name="MidFloor" type="StaticBody2D" parent="."]
+position = Vector2(695, 666)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MidFloor"]
+shape = SubResource("RectangleShape2D_mid_floor")
+
+[node name="Visual" type="Polygon2D" parent="MidFloor"]
+color = Color(0.66, 0.71, 0.76, 1)
+polygon = PackedVector2Array(-170, -26, 170, -26, 170, 26, -170, 26)
+
+[node name="RightFloor" type="StaticBody2D" parent="."]
+position = Vector2(1065, 666)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightFloor"]
+shape = SubResource("RectangleShape2D_right_floor")
+
+[node name="Visual" type="Polygon2D" parent="RightFloor"]
+color = Color(0.7, 0.74, 0.78, 1)
+polygon = PackedVector2Array(-215, -26, 215, -26, 215, 26, -215, 26)
 
 [node name="LeftBoundary" type="StaticBody2D" parent="."]
 position = Vector2(-17, 360)
@@ -65,17 +96,22 @@ position = Vector2(640, -16)
 shape = SubResource("RectangleShape2D_ceiling")
 
 [node name="FallingBox" parent="." instance=ExtResource("7_box")]
-position = Vector2(520, 340)
+position = Vector2(500, 340)
 box_kind = 1
-min_position = Vector2(430, 250)
-max_position = Vector2(820, 430)
+min_position = Vector2(450, 300)
+max_position = Vector2(820, 380)
 
 [node name="GroundEnemy" parent="." instance=ExtResource("8_ground_enemy")]
 position = Vector2(755, 615)
 scale = Vector2(1, 1.45)
 
 [node name="PerspectiveSwitch" parent="." instance=ExtResource("5_switch")]
-position = Vector2(260, 600)
+position = Vector2(610, 600)
+
+[node name="TopdownRouteLock" parent="." instance=ExtResource("10_wall")]
+position = Vector2(930, 535)
+scale = Vector2(1, 2.35)
+active_mode = 1
 
 [node name="Goal" parent="." instance=ExtResource("6_goal")]
 position = Vector2(1110, 592)
@@ -83,7 +119,7 @@ active_mode = 0
 next_scene_path = "res://scenes/Level04_ModeIceArea.tscn"
 
 [node name="Player" parent="." instance=ExtResource("4_player")]
-position = Vector2(145, 600)
+position = Vector2(155, 520)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(640, 360)

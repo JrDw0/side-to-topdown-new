@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=18 format=3]
 
 [ext_resource type="Script" path="res://scripts/Level.gd" id="1_level"]
 [ext_resource type="Script" path="res://scripts/PerspectiveController.gd" id="2_controller"]
@@ -8,9 +8,22 @@
 [ext_resource type="PackedScene" path="res://scenes/Goal.tscn" id="6_goal"]
 [ext_resource type="PackedScene" path="res://scenes/FlyingEnemy.tscn" id="7_flying_enemy"]
 [ext_resource type="Script" path="res://scripts/PerspectiveCamera.gd" id="8_camera"]
+[ext_resource type="PackedScene" path="res://scenes/ModeWall.tscn" id="9_wall"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
-size = Vector2(1200, 52)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_left_floor"]
+size = Vector2(610, 52)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trap_floor"]
+size = Vector2(250, 52)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_right_floor"]
+size = Vector2(420, 52)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_guide_pillar"]
+size = Vector2(80, 120)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_low_ceiling"]
+size = Vector2(520, 34)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_left_bound"]
 size = Vector2(34, 720)
@@ -32,18 +45,58 @@ script = ExtResource("2_controller")
 initial_mode = 1
 
 [node name="TrapZone" type="Polygon2D" parent="."]
-color = Color(1, 0.9, 0.2, 0.22)
-polygon = PackedVector2Array(600, 520, 780, 520, 780, 650, 600, 650)
+color = Color(1, 0.9, 0.2, 0.24)
+polygon = PackedVector2Array(610, 500, 820, 500, 820, 650, 610, 650)
 
-[node name="Floor" type="StaticBody2D" parent="."]
-position = Vector2(640, 666)
+[node name="LeftFloor" type="StaticBody2D" parent="."]
+position = Vector2(305, 666)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
-shape = SubResource("RectangleShape2D_floor")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftFloor"]
+shape = SubResource("RectangleShape2D_left_floor")
 
-[node name="Visual" type="Polygon2D" parent="Floor"]
+[node name="Visual" type="Polygon2D" parent="LeftFloor"]
 color = Color(0.7, 0.74, 0.78, 1)
-polygon = PackedVector2Array(-600, -26, 600, -26, 600, 26, -600, 26)
+polygon = PackedVector2Array(-305, -26, 305, -26, 305, 26, -305, 26)
+
+[node name="TrapFloor" type="StaticBody2D" parent="."]
+position = Vector2(735, 666)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TrapFloor"]
+shape = SubResource("RectangleShape2D_trap_floor")
+
+[node name="Visual" type="Polygon2D" parent="TrapFloor"]
+color = Color(0.66, 0.71, 0.76, 1)
+polygon = PackedVector2Array(-125, -26, 125, -26, 125, 26, -125, 26)
+
+[node name="RightFloor" type="StaticBody2D" parent="."]
+position = Vector2(1070, 666)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightFloor"]
+shape = SubResource("RectangleShape2D_right_floor")
+
+[node name="Visual" type="Polygon2D" parent="RightFloor"]
+color = Color(0.7, 0.74, 0.78, 1)
+polygon = PackedVector2Array(-210, -26, 210, -26, 210, 26, -210, 26)
+
+[node name="GuidePillar" type="StaticBody2D" parent="."]
+position = Vector2(690, 560)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GuidePillar"]
+shape = SubResource("RectangleShape2D_guide_pillar")
+
+[node name="Visual" type="Polygon2D" parent="GuidePillar"]
+color = Color(0.72, 0.78, 0.84, 1)
+polygon = PackedVector2Array(-40, -60, 40, -60, 40, 60, -40, 60)
+
+[node name="LowCeiling" type="StaticBody2D" parent="."]
+position = Vector2(1000, 535)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LowCeiling"]
+shape = SubResource("RectangleShape2D_low_ceiling")
+
+[node name="Visual" type="Polygon2D" parent="LowCeiling"]
+color = Color(0.55, 0.62, 0.68, 1)
+polygon = PackedVector2Array(-260, -17, 260, -17, 260, 17, -260, 17)
 
 [node name="LeftBoundary" type="StaticBody2D" parent="."]
 position = Vector2(-17, 360)
@@ -64,19 +117,24 @@ position = Vector2(640, -16)
 shape = SubResource("RectangleShape2D_ceiling")
 
 [node name="PerspectiveSwitch" parent="." instance=ExtResource("5_switch")]
-position = Vector2(520, 590)
+position = Vector2(790, 590)
 
 [node name="FlyingEnemy" parent="." instance=ExtResource("7_flying_enemy")]
 position = Vector2(920, 590)
-trap_min = Vector2(600, 520)
-trap_max = Vector2(780, 650)
+trap_min = Vector2(610, 500)
+trap_max = Vector2(820, 650)
+
+[node name="TopdownRouteLock" parent="." instance=ExtResource("9_wall")]
+position = Vector2(1010, 535)
+scale = Vector2(1, 2.35)
+active_mode = 1
 
 [node name="Goal" parent="." instance=ExtResource("6_goal")]
 position = Vector2(1110, 592)
 active_mode = 0
 
 [node name="Player" parent="." instance=ExtResource("4_player")]
-position = Vector2(145, 600)
+position = Vector2(145, 560)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(640, 360)
