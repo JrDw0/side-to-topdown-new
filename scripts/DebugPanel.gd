@@ -2,21 +2,13 @@ extends Control
 
 ## 启动关卡时是否默认展开调试面板。
 @export var default_expanded := true
-## 选关下拉框显示的中文名称，需要与“关卡场景路径列表”一一对应。
-@export var level_display_names := PackedStringArray([
-	"第 1 关：视角切换",
-	"第 2 关：推箱平台",
-	"第 3 关：箱子压制",
-	"第 4 关：模式冰面",
-	"第 5 关：飞行陷阱",
-])
-## 选关下拉框使用的场景路径，需要与“关卡显示名称列表”一一对应。
-@export var level_scene_paths := PackedStringArray([
-	"res://scenes/Level01_SwitchCamera.tscn",
-	"res://scenes/Level02_BoxPlatform.tscn",
-	"res://scenes/Level03_BoxCrush.tscn",
-	"res://scenes/Level04_ModeIceArea.tscn",
-	"res://scenes/Level05_FlyingTrap.tscn",
+## 自动生成选关列表时扫描的关卡目录。
+@export_dir var levels_directory := "res://scenes/levels"
+## 是否递归扫描“关卡目录”下的子文件夹，用于按分类文件夹整理关卡。
+@export var scan_subdirectories := true
+## 自动选关列表中需要排除的场景路径，例如测试场景或旧入口场景。
+@export var excluded_level_scene_paths := PackedStringArray([
+	"res://scenes/levels/Main.tscn",
 ])
 ## 面板距离视口左上角的边距，单位为像素。
 @export var panel_margin := Vector2(16.0, 16.0)
@@ -35,6 +27,7 @@ extends Control
 
 var _expanded := true
 var _current_level_index := -1
+var _level_scene_paths := PackedStringArray()
 
 
 func _ready() -> void:
@@ -69,12 +62,12 @@ func _connect_signals() -> void:
 
 func _build_level_options() -> void:
 	level_option.clear()
-	var option_count := mini(level_display_names.size(), level_scene_paths.size())
-	for index in range(option_count):
-		level_option.add_item(level_display_names[index], index)
+	_level_scene_paths = _find_level_scene_paths()
+	for index in range(_level_scene_paths.size()):
+		level_option.add_item(_get_level_display_name(_level_scene_paths[index]), index)
 
-	if option_count == 0:
-		status_label.text = "未配置关卡"
+	if _level_scene_paths.is_empty():
+		status_label.text = "未找到关卡：" + _normalize_directory_path(levels_directory)
 		enter_button.disabled = true
 		previous_button.disabled = true
 		next_button.disabled = true
@@ -86,7 +79,7 @@ func _select_current_level() -> void:
 	if get_tree().current_scene != null:
 		current_path = get_tree().current_scene.scene_file_path
 
-	_current_level_index = level_scene_paths.find(current_path)
+	_current_level_index = _level_scene_paths.find(current_path)
 	if _current_level_index >= 0 and _current_level_index < level_option.item_count:
 		level_option.select(_current_level_index)
 	elif level_option.item_count > 0:
@@ -126,15 +119,60 @@ func _apply_panel_margin() -> void:
 
 
 func _change_to_level(index: int) -> void:
-	if index < 0 or index >= level_scene_paths.size():
+	if index < 0 or index >= _level_scene_paths.size():
 		return
 
-	var scene_path := level_scene_paths[index]
+	var scene_path := _level_scene_paths[index]
 	if not ResourceLoader.exists(scene_path):
 		status_label.text = "关卡不存在：" + scene_path
 		return
 
 	get_tree().call_deferred("change_scene_to_file", scene_path)
+
+
+func _find_level_scene_paths() -> PackedStringArray:
+	var level_paths: Array[String] = []
+	_collect_level_scene_paths(_normalize_directory_path(levels_directory), level_paths)
+	level_paths.sort()
+	return PackedStringArray(level_paths)
+
+
+func _collect_level_scene_paths(directory_path: String, level_paths: Array[String]) -> void:
+	var directory := DirAccess.open(directory_path)
+	if directory == null:
+		return
+
+	directory.list_dir_begin()
+	var file_name := directory.get_next()
+	while not file_name.is_empty():
+		if file_name == "." or file_name == "..":
+			file_name = directory.get_next()
+			continue
+
+		var path := directory_path.path_join(file_name)
+		if directory.current_is_dir():
+			if scan_subdirectories:
+				_collect_level_scene_paths(path, level_paths)
+		elif file_name.get_extension() == "tscn" and _should_include_level_scene(path):
+			level_paths.append(path)
+
+		file_name = directory.get_next()
+	directory.list_dir_end()
+
+
+func _should_include_level_scene(scene_path: String) -> bool:
+	if scene_path in excluded_level_scene_paths:
+		return false
+	return ResourceLoader.exists(scene_path, "PackedScene")
+
+
+func _get_level_display_name(scene_path: String) -> String:
+	var file_name := scene_path.get_file().get_basename()
+	return file_name.replace("_", " ")
+
+
+func _normalize_directory_path(directory_path: String) -> String:
+	return directory_path.trim_suffix("/")
 
 
 func _on_collapse_pressed() -> void:
