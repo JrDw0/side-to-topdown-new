@@ -1,0 +1,114 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scripts/Level.gd" id="1_level"]
+[ext_resource type="Script" path="res://scripts/PerspectiveController.gd" id="2_controller"]
+[ext_resource type="Script" path="res://scripts/ModeBackdrop.gd" id="3_backdrop"]
+[ext_resource type="PackedScene" path="res://scenes/actors/Player.tscn" id="4_player"]
+[ext_resource type="PackedScene" path="res://scenes/mechanics/PerspectiveSwitch.tscn" id="5_switch"]
+[ext_resource type="PackedScene" path="res://scenes/objects/Goal.tscn" id="6_goal"]
+[ext_resource type="Script" path="res://scripts/PerspectiveCamera.gd" id="7_camera"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform_a"]
+size = Vector2(280, 46)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform_b"]
+size = Vector2(320, 52)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform_c"]
+size = Vector2(520, 52)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_left_bound"]
+size = Vector2(34, 720)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_right_bound"]
+size = Vector2(34, 720)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ceiling"]
+size = Vector2(1280, 32)
+
+[node name="Level06_Sandbox" type="Node2D"]
+script = ExtResource("1_level")
+
+[node name="ModeBackdrop" type="Node2D" parent="."]
+script = ExtResource("3_backdrop")
+
+[node name="PerspectiveController" type="Node" parent="."]
+script = ExtResource("2_controller")
+
+[node name="PlatformA" type="StaticBody2D" parent="."]
+position = Vector2(140, 548)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformA"]
+shape = SubResource("RectangleShape2D_platform_a")
+
+[node name="Visual" type="Polygon2D" parent="PlatformA"]
+color = Color(0.7, 0.74, 0.78, 1)
+polygon = PackedVector2Array(-140, -23, 140, -23, 140, 23, -140, 23)
+
+[node name="PlatformB" type="StaticBody2D" parent="."]
+position = Vector2(380, 635)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformB"]
+shape = SubResource("RectangleShape2D_platform_b")
+
+[node name="Visual" type="Polygon2D" parent="PlatformB"]
+color = Color(0.7, 0.74, 0.78, 1)
+polygon = PackedVector2Array(-160, -26, 160, -26, 160, 26, -160, 26)
+
+[node name="PlatformC" type="StaticBody2D" parent="."]
+position = Vector2(950, 666)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformC"]
+shape = SubResource("RectangleShape2D_platform_c")
+
+[node name="Visual" type="Polygon2D" parent="PlatformC"]
+color = Color(0.7, 0.74, 0.78, 1)
+polygon = PackedVector2Array(-260, -26, 260, -26, 260, 26, -260, 26)
+
+[node name="LeftBoundary" type="StaticBody2D" parent="."]
+position = Vector2(-17, 360)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftBoundary"]
+shape = SubResource("RectangleShape2D_left_bound")
+
+[node name="RightBoundary" type="StaticBody2D" parent="."]
+position = Vector2(1297, 360)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightBoundary"]
+shape = SubResource("RectangleShape2D_right_bound")
+
+[node name="CeilingBoundary" type="StaticBody2D" parent="."]
+position = Vector2(640, -16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CeilingBoundary"]
+shape = SubResource("RectangleShape2D_ceiling")
+
+[node name="PerspectiveSwitch" parent="." instance=ExtResource("5_switch")]
+position = Vector2(420, 600)
+
+[node name="Goal" parent="." instance=ExtResource("6_goal")]
+position = Vector2(1115, 593)
+
+[node name="Player" parent="." instance=ExtResource("4_player")]
+position = Vector2(100, 496)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+script = ExtResource("7_camera")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="WinLabel" type="Label" parent="CanvasLayer"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -24.0
+offset_right = 120.0
+offset_bottom = 24.0
+text = "通关"
+horizontal_alignment = 1
+vertical_alignment = 1

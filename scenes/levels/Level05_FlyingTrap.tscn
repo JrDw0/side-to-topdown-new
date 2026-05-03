@@ -132,6 +132,7 @@ active_mode = 1
 [node name="Goal" parent="." instance=ExtResource("6_goal")]
 position = Vector2(1110, 592)
 active_mode = 0
+next_scene_path = "res://scenes/levels/Level06_Sandbox.tscn"
 
 [node name="Player" parent="." instance=ExtResource("4_player")]
 position = Vector2(145, 560)
