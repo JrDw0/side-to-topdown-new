@@ -1,10 +1,15 @@
 extends StaticBody2D
 
 const PerspectiveModes := preload("res://scripts/PerspectiveModes.gd")
+const BrickVisualBuilder := preload("res://scripts/BrickVisualBuilder.gd")
 
 @export_enum("SIDE", "TOPDOWN") var active_mode := 1
 @export var active_alpha := 0.88
 @export var inactive_alpha := 0.14
+## 模式墙的砖块视觉素材。实际碰撞仍由 CollisionShape2D 决定。
+@export var brick_texture: Texture2D = preload("res://assets/地面 墙纸tiles/下水道砖块.png")
+## 砖块视觉在场景中的目标尺寸。高精度原图会缩小到这个尺寸重复铺设。
+@export_range(8.0, 128.0, 1.0) var brick_tile_size := 32.0
 
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var visual: Polygon2D = $Visual
@@ -15,6 +20,7 @@ var _mode: int = PerspectiveModes.Mode.TOPDOWN
 
 func _ready() -> void:
 	add_to_group("perspective_objects")
+	_rebuild_brick_visual()
 	_sync_with_controller()
 	_apply_state()
 
@@ -44,3 +50,12 @@ func _apply_state() -> void:
 	visual.modulate.a = active_alpha if active else inactive_alpha
 	if perspective_visual != null and perspective_visual.has_method("set_shadow_alpha_multiplier"):
 		perspective_visual.set_shadow_alpha_multiplier(active_alpha if active else inactive_alpha)
+
+
+func _rebuild_brick_visual() -> void:
+	var rectangle_shape := collision_shape.shape as RectangleShape2D
+	if rectangle_shape == null:
+		return
+
+	BrickVisualBuilder.rebuild(visual, rectangle_shape.size, brick_texture, brick_tile_size)
+	BrickVisualBuilder.make_polygon_invisible(visual)
