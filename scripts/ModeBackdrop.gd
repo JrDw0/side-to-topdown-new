@@ -20,6 +20,7 @@ var _tween: Tween
 func _ready() -> void:
 	add_to_group("perspective_objects")
 	z_index = -100
+	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	_sync_with_controller()
 	_ready_done = true
 	queue_redraw()
@@ -54,10 +55,6 @@ func _sync_with_controller() -> void:
 
 
 func _draw() -> void:
-	var side_color := Color(0.075, 0.085, 0.105, 1.0)
-	var topdown_color := Color(0.055, 0.11, 0.095, 1.0)
-	draw_rect(Rect2(Vector2.ZERO, size), side_color.lerp(topdown_color, _transition_progress))
-
 	_draw_horizon(1.0 - _transition_progress)
 	_draw_grid(_transition_progress)
 

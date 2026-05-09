@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b3obv2cd80lsx"]
+[gd_scene load_steps=18 format=3 uid="uid://b3obv2cd80lsx"]
 
 [ext_resource type="Script" uid="uid://blpmj6dyk4y3h" path="res://scripts/Level.gd" id="1_level"]
 [ext_resource type="Script" uid="uid://dxu64fm35kdhp" path="res://scripts/PerspectiveController.gd" id="2_controller"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" path="res://scenes/actors/GroundEnemy.tscn" id="8_ground_enemy"]
 [ext_resource type="Script" uid="uid://clw1isornpnve" path="res://scripts/PerspectiveCamera.gd" id="9_camera"]
 [ext_resource type="PackedScene" path="res://scenes/mechanics/ModeWall.tscn" id="10_wall"]
+[ext_resource type="Texture2D" uid="uid://btx4ke54epbo0" path="res://assets/地面 墙纸tiles/壁纸.png" id="11_wallpaper"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_left_floor"]
 size = Vector2(560, 52)
@@ -34,6 +35,17 @@ script = ExtResource("1_level")
 
 [node name="ModeBackdrop" type="Node2D" parent="."]
 script = ExtResource("3_backdrop")
+
+[node name="WallpaperTile" type="Sprite2D" parent="ModeBackdrop"]
+modulate = Color(1, 1, 1, 1)
+texture_filter = 1
+texture_repeat = 2
+z_index = -1
+scale = Vector2(0.125, 0.125)
+texture = ExtResource("11_wallpaper")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 10240, 5760)
 
 [node name="PerspectiveController" type="Node" parent="."]
 script = ExtResource("2_controller")
