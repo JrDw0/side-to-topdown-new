@@ -10,6 +10,8 @@ const PerspectiveModes := preload("res://scripts/PerspectiveModes.gd")
 @export var grid_step := 64.0
 ## 横版地平线与俯视网格互相淡入淡出的时长。
 @export_range(0.0, 1.0, 0.01) var transition_duration := 0.22
+## 是否绘制横版视角底部暗色地平线遮罩。关闭可避免屏幕底部出现黑块。
+@export var draw_side_horizon_shadow := false
 
 var _mode: int = PerspectiveModes.Mode.SIDE
 var _transition_progress := 0.0
@@ -68,9 +70,10 @@ func _draw_horizon(alpha: float) -> void:
 	if alpha <= 0.0:
 		return
 
-	draw_rect(Rect2(Vector2(0.0, 640.0), Vector2(size.x, 80.0)), Color(0.045, 0.05, 0.06, 0.96 * alpha))
-	draw_rect(Rect2(Vector2(0.0, 680.0), Vector2(size.x, 40.0)), Color(0.028, 0.032, 0.04, 0.85 * alpha))
-	draw_line(Vector2(0.0, 640.0), Vector2(size.x, 640.0), Color(0.26, 0.48, 0.82, 0.62 * alpha), 3.0)
+	if draw_side_horizon_shadow:
+		draw_rect(Rect2(Vector2(0.0, 640.0), Vector2(size.x, 80.0)), Color(0.045, 0.05, 0.06, 0.96 * alpha))
+		draw_rect(Rect2(Vector2(0.0, 680.0), Vector2(size.x, 40.0)), Color(0.028, 0.032, 0.04, 0.85 * alpha))
+		draw_line(Vector2(0.0, 640.0), Vector2(size.x, 640.0), Color(0.26, 0.48, 0.82, 0.62 * alpha), 3.0)
 
 	var reference_color := Color(0.42, 0.58, 0.82, 0.13 * alpha)
 	for line_y in [520.0, 570.0, 610.0]:

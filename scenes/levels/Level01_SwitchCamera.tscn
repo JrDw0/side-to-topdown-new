@@ -35,7 +35,6 @@ script = ExtResource("1_level")
 script = ExtResource("3_backdrop")
 
 [node name="WallpaperTile" type="Sprite2D" parent="ModeBackdrop"]
-modulate = Color(1, 1, 1, 1)
 z_index = -1
 texture_filter = 1
 texture_repeat = 2
