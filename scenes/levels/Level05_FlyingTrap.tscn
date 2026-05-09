@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3]
+[gd_scene load_steps=15 format=3]
 
 [ext_resource type="Script" path="res://scripts/Level.gd" id="1_level"]
 [ext_resource type="Script" path="res://scripts/PerspectiveController.gd" id="2_controller"]
@@ -10,21 +10,7 @@
 [ext_resource type="Script" path="res://scripts/PerspectiveCamera.gd" id="8_camera"]
 [ext_resource type="PackedScene" path="res://scenes/mechanics/ModeWall.tscn" id="9_wall"]
 [ext_resource type="Texture2D" uid="uid://btx4ke54epbo0" path="res://assets/地面 墙纸tiles/壁纸.png" id="10_wallpaper"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_left_floor"]
-size = Vector2(610, 52)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_trap_floor"]
-size = Vector2(250, 52)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_right_floor"]
-size = Vector2(420, 52)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_guide_pillar"]
-size = Vector2(80, 120)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_low_ceiling"]
-size = Vector2(520, 34)
+[ext_resource type="PackedScene" path="res://scenes/objects/BrickBlock.tscn" id="11_brick_block"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_left_bound"]
 size = Vector2(34, 720)
@@ -60,55 +46,30 @@ initial_mode = 1
 color = Color(1, 0.9, 0.2, 0.24)
 polygon = PackedVector2Array(610, 500, 820, 500, 820, 650, 610, 650)
 
-[node name="LeftFloor" type="StaticBody2D" parent="."]
+[node name="LeftFloor" parent="." instance=ExtResource("11_brick_block")]
 position = Vector2(305, 666)
+block_size = Vector2(610, 52)
+visual_modulate = Color(0.7, 0.74, 0.78, 1)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftFloor"]
-shape = SubResource("RectangleShape2D_left_floor")
-
-[node name="Visual" type="Polygon2D" parent="LeftFloor"]
-color = Color(0.7, 0.74, 0.78, 1)
-polygon = PackedVector2Array(-305, -26, 305, -26, 305, 26, -305, 26)
-
-[node name="TrapFloor" type="StaticBody2D" parent="."]
+[node name="TrapFloor" parent="." instance=ExtResource("11_brick_block")]
 position = Vector2(735, 666)
+block_size = Vector2(250, 52)
+visual_modulate = Color(0.66, 0.71, 0.76, 1)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TrapFloor"]
-shape = SubResource("RectangleShape2D_trap_floor")
-
-[node name="Visual" type="Polygon2D" parent="TrapFloor"]
-color = Color(0.66, 0.71, 0.76, 1)
-polygon = PackedVector2Array(-125, -26, 125, -26, 125, 26, -125, 26)
-
-[node name="RightFloor" type="StaticBody2D" parent="."]
+[node name="RightFloor" parent="." instance=ExtResource("11_brick_block")]
 position = Vector2(1070, 666)
+block_size = Vector2(420, 52)
+visual_modulate = Color(0.7, 0.74, 0.78, 1)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RightFloor"]
-shape = SubResource("RectangleShape2D_right_floor")
-
-[node name="Visual" type="Polygon2D" parent="RightFloor"]
-color = Color(0.7, 0.74, 0.78, 1)
-polygon = PackedVector2Array(-210, -26, 210, -26, 210, 26, -210, 26)
-
-[node name="GuidePillar" type="StaticBody2D" parent="."]
+[node name="GuidePillar" parent="." instance=ExtResource("11_brick_block")]
 position = Vector2(690, 560)
+block_size = Vector2(80, 120)
+visual_modulate = Color(0.72, 0.78, 0.84, 1)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GuidePillar"]
-shape = SubResource("RectangleShape2D_guide_pillar")
-
-[node name="Visual" type="Polygon2D" parent="GuidePillar"]
-color = Color(0.72, 0.78, 0.84, 1)
-polygon = PackedVector2Array(-40, -60, 40, -60, 40, 60, -40, 60)
-
-[node name="LowCeiling" type="StaticBody2D" parent="."]
+[node name="LowCeiling" parent="." instance=ExtResource("11_brick_block")]
 position = Vector2(1000, 535)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LowCeiling"]
-shape = SubResource("RectangleShape2D_low_ceiling")
-
-[node name="Visual" type="Polygon2D" parent="LowCeiling"]
-color = Color(0.55, 0.62, 0.68, 1)
-polygon = PackedVector2Array(-260, -17, 260, -17, 260, 17, -260, 17)
+block_size = Vector2(520, 34)
+visual_modulate = Color(0.55, 0.62, 0.68, 1)
 
 [node name="LeftBoundary" type="StaticBody2D" parent="."]
 position = Vector2(-17, 360)

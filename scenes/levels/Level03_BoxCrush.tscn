@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://b3obv2cd80lsx"]
+[gd_scene load_steps=16 format=3 uid="uid://b3obv2cd80lsx"]
 
 [ext_resource type="Script" uid="uid://blpmj6dyk4y3h" path="res://scripts/Level.gd" id="1_level"]
 [ext_resource type="Script" uid="uid://dxu64fm35kdhp" path="res://scripts/PerspectiveController.gd" id="2_controller"]
@@ -11,15 +11,7 @@
 [ext_resource type="Script" uid="uid://clw1isornpnve" path="res://scripts/PerspectiveCamera.gd" id="9_camera"]
 [ext_resource type="PackedScene" path="res://scenes/mechanics/ModeWall.tscn" id="10_wall"]
 [ext_resource type="Texture2D" uid="uid://btx4ke54epbo0" path="res://assets/地面 墙纸tiles/壁纸.png" id="11_wallpaper"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_left_floor"]
-size = Vector2(560, 52)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mid_floor"]
-size = Vector2(340, 52)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_right_floor"]
-size = Vector2(430, 52)
+[ext_resource type="PackedScene" path="res://scenes/objects/BrickBlock.tscn" id="12_brick_block"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_left_bound"]
 size = Vector2(34, 720)
@@ -59,35 +51,20 @@ polygon = PackedVector2Array(450, 300, 820, 300, 820, 380, 450, 380)
 color = Color(1, 0.9, 0.18, 0.24)
 polygon = PackedVector2Array(690, 300, 820, 300, 820, 380, 690, 380)
 
-[node name="LeftFloor" type="StaticBody2D" parent="."]
+[node name="LeftFloor" parent="." instance=ExtResource("12_brick_block")]
 position = Vector2(280, 666)
+block_size = Vector2(560, 52)
+visual_modulate = Color(0.7, 0.74, 0.78, 1)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftFloor"]
-shape = SubResource("RectangleShape2D_left_floor")
-
-[node name="Visual" type="Polygon2D" parent="LeftFloor"]
-color = Color(0.7, 0.74, 0.78, 1)
-polygon = PackedVector2Array(-280, -26, 280, -26, 280, 26, -280, 26)
-
-[node name="MidFloor" type="StaticBody2D" parent="."]
+[node name="MidFloor" parent="." instance=ExtResource("12_brick_block")]
 position = Vector2(695, 666)
+block_size = Vector2(340, 52)
+visual_modulate = Color(0.66, 0.71, 0.76, 1)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MidFloor"]
-shape = SubResource("RectangleShape2D_mid_floor")
-
-[node name="Visual" type="Polygon2D" parent="MidFloor"]
-color = Color(0.66, 0.71, 0.76, 1)
-polygon = PackedVector2Array(-170, -26, 170, -26, 170, 26, -170, 26)
-
-[node name="RightFloor" type="StaticBody2D" parent="."]
+[node name="RightFloor" parent="." instance=ExtResource("12_brick_block")]
 position = Vector2(1065, 666)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RightFloor"]
-shape = SubResource("RectangleShape2D_right_floor")
-
-[node name="Visual" type="Polygon2D" parent="RightFloor"]
-color = Color(0.7, 0.74, 0.78, 1)
-polygon = PackedVector2Array(-215, -26, 215, -26, 215, 26, -215, 26)
+block_size = Vector2(430, 52)
+visual_modulate = Color(0.7, 0.74, 0.78, 1)
 
 [node name="LeftBoundary" type="StaticBody2D" parent="."]
 position = Vector2(-17, 360)

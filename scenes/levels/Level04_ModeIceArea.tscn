@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3]
+[gd_scene load_steps=15 format=3]
 
 [ext_resource type="Script" path="res://scripts/Level.gd" id="1_level"]
 [ext_resource type="Script" path="res://scripts/PerspectiveController.gd" id="2_controller"]
@@ -10,12 +10,7 @@
 [ext_resource type="Script" path="res://scripts/PerspectiveCamera.gd" id="8_camera"]
 [ext_resource type="PackedScene" path="res://scenes/mechanics/ModeWall.tscn" id="9_wall"]
 [ext_resource type="Texture2D" uid="uid://btx4ke54epbo0" path="res://assets/地面 墙纸tiles/壁纸.png" id="10_wallpaper"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_left_floor"]
-size = Vector2(430, 52)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_right_floor"]
-size = Vector2(480, 52)
+[ext_resource type="PackedScene" path="res://scenes/objects/BrickBlock.tscn" id="11_brick_block"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_left_bound"]
 size = Vector2(34, 720)
@@ -55,25 +50,15 @@ polygon = PackedVector2Array(430, 619, 800, 619, 800, 720, 430, 720)
 color = Color(0.42, 0.95, 1, 0.14)
 polygon = PackedVector2Array(465, 619, 816, 619, 816, 661, 465, 661)
 
-[node name="LeftFloor" type="StaticBody2D" parent="."]
+[node name="LeftFloor" parent="." instance=ExtResource("11_brick_block")]
 position = Vector2(215, 645)
+block_size = Vector2(430, 52)
+visual_modulate = Color(0.7, 0.74, 0.78, 1)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftFloor"]
-shape = SubResource("RectangleShape2D_left_floor")
-
-[node name="Visual" type="Polygon2D" parent="LeftFloor"]
-color = Color(0.7, 0.74, 0.78, 1)
-polygon = PackedVector2Array(-215, -26, 215, -26, 215, 26, -215, 26)
-
-[node name="RightFloor" type="StaticBody2D" parent="."]
+[node name="RightFloor" parent="." instance=ExtResource("11_brick_block")]
 position = Vector2(1040, 645)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RightFloor"]
-shape = SubResource("RectangleShape2D_right_floor")
-
-[node name="Visual" type="Polygon2D" parent="RightFloor"]
-color = Color(0.7, 0.74, 0.78, 1)
-polygon = PackedVector2Array(-240, -26, 240, -26, 240, 26, -240, 26)
+block_size = Vector2(480, 52)
+visual_modulate = Color(0.7, 0.74, 0.78, 1)
 
 [node name="LeftBoundary" type="StaticBody2D" parent="."]
 position = Vector2(-17, 360)

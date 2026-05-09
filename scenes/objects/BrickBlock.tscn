@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/BrickBlock.gd" id="1_brick_block"]
+[ext_resource type="Texture2D" uid="uid://cwqtar62wyltj" path="res://assets/地面 墙纸tiles/下水道砖块.png" id="2_brick"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_brick_block"]
+size = Vector2(128, 32)
+
+[node name="BrickBlock" type="StaticBody2D"]
+script = ExtResource("1_brick_block")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_brick_block")
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="BrickTile" type="Sprite2D" parent="Visual"]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(-64, -16)
+scale = Vector2(0.0625, 0.0625)
+texture = ExtResource("2_brick")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 2048, 512)
