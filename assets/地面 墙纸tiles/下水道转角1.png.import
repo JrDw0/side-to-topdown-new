@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dj1kgskjq8ndq"
-path="res://.godot/imported/下水道包框.png-f72b54eb2d54fb6138fdae33b27ec34d.ctex"
+uid="uid://tsqcr4usktmb"
+path="res://.godot/imported/下水道转角1.png-2fe44c500be25c99abff24aeef85e0c1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/地面 墙纸tiles/下水道包框.png"
-dest_files=["res://.godot/imported/下水道包框.png-f72b54eb2d54fb6138fdae33b27ec34d.ctex"]
+source_file="res://assets/地面 墙纸tiles/下水道转角1.png"
+dest_files=["res://.godot/imported/下水道转角1.png-2fe44c500be25c99abff24aeef85e0c1.ctex"]
 
 [params]
 

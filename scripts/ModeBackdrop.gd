@@ -8,6 +8,8 @@ const PerspectiveModes := preload("res://scripts/PerspectiveModes.gd")
 @export var size := Vector2(1280.0, 720.0)
 ## 俯视网格的单元大小。
 @export var grid_step := 64.0
+## 是否绘制俯视视角的网格线。关闭后仍保留背景贴图和视角切换逻辑。
+@export var draw_topdown_grid := false
 ## 横版地平线与俯视网格互相淡入淡出的时长。
 @export_range(0.0, 1.0, 0.01) var transition_duration := 0.22
 ## 是否绘制横版视角底部暗色地平线遮罩。关闭可避免屏幕底部出现黑块。
@@ -58,7 +60,8 @@ func _sync_with_controller() -> void:
 
 func _draw() -> void:
 	_draw_horizon(1.0 - _transition_progress)
-	_draw_grid(_transition_progress)
+	if draw_topdown_grid:
+		_draw_grid(_transition_progress)
 
 
 func _set_transition_progress(value: float) -> void:
