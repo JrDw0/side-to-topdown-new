@@ -1,7 +1,11 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scripts/BrickBlock.gd" id="1_brick_block"]
 [ext_resource type="Texture2D" uid="uid://cwqtar62wyltj" path="res://assets/地面 墙纸tiles/下水道砖块.png" id="2_brick"]
+[ext_resource type="Texture2D" uid="uid://dj1kgskjq8ndq" path="res://assets/地面 墙纸tiles/下水道包框1.png" id="3_edge_1"]
+[ext_resource type="Texture2D" uid="uid://bbnowebhgx05n" path="res://assets/地面 墙纸tiles/下水道包框2.png" id="4_edge_2"]
+[ext_resource type="Texture2D" uid="uid://tsqcr4usktmb" path="res://assets/地面 墙纸tiles/下水道转角1.png" id="5_corner_1"]
+[ext_resource type="Texture2D" uid="uid://bagkoi2weat5q" path="res://assets/地面 墙纸tiles/下水道转角2.png" id="6_corner_2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_brick_block"]
 size = Vector2(128, 32)
@@ -23,3 +27,54 @@ texture = ExtResource("2_brick")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 2048, 512)
+
+[node name="EdgeDecoration" type="Node2D" parent="Visual"]
+z_index = 1
+
+[node name="TopEdgeSegments" type="Node2D" parent="Visual/EdgeDecoration"]
+position = Vector2(0, -19)
+
+[node name="BottomEdgeSegments" type="Node2D" parent="Visual/EdgeDecoration"]
+visible = false
+position = Vector2(0, 19)
+rotation = 3.14159
+
+[node name="LeftEdgeSegments" type="Node2D" parent="Visual/EdgeDecoration"]
+visible = false
+position = Vector2(-67, 0)
+rotation = -1.5708
+
+[node name="RightEdgeSegments" type="Node2D" parent="Visual/EdgeDecoration"]
+visible = false
+position = Vector2(67, 0)
+rotation = 1.5708
+
+[node name="TopLeftCorner" type="Sprite2D" parent="Visual/EdgeDecoration"]
+texture_filter = 1
+position = Vector2(-67, -19)
+scale = Vector2(0.0918919, 0.0918919)
+texture = ExtResource("5_corner_1")
+
+[node name="TopRightCorner" type="Sprite2D" parent="Visual/EdgeDecoration"]
+texture_filter = 1
+position = Vector2(67, -19)
+scale = Vector2(0.0918919, 0.0918919)
+texture = ExtResource("5_corner_1")
+flip_h = true
+
+[node name="BottomLeftCorner" type="Sprite2D" parent="Visual/EdgeDecoration"]
+visible = false
+texture_filter = 1
+position = Vector2(-67, 19)
+rotation = 3.14159
+scale = Vector2(0.0918919, 0.0918919)
+texture = ExtResource("5_corner_1")
+flip_h = true
+
+[node name="BottomRightCorner" type="Sprite2D" parent="Visual/EdgeDecoration"]
+visible = false
+texture_filter = 1
+position = Vector2(67, 19)
+rotation = 3.14159
+scale = Vector2(0.0918919, 0.0918919)
+texture = ExtResource("5_corner_1")
