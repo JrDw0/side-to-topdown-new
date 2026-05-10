@@ -8,6 +8,10 @@
 
 config_version=5
 
+[addons]
+
+ss2d/version="3.3.1"
+
 [application]
 
 config/name="side-to-topdown"
@@ -19,6 +23,10 @@ config/icon="res://icon.svg"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/rmsmartshape/plugin.cfg")
 
 [input]
 

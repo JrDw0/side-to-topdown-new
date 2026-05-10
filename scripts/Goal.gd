@@ -4,6 +4,7 @@ const PerspectiveModes := preload("res://scripts/PerspectiveModes.gd")
 
 @export_enum("SIDE", "TOPDOWN") var active_mode := 0
 @export_file("*.tscn") var next_scene_path := ""
+@export var locked := false
 
 @onready var visual: Polygon2D = $Visual
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
@@ -12,12 +13,20 @@ const PerspectiveModes := preload("res://scripts/PerspectiveModes.gd")
 var _mode: int = PerspectiveModes.Mode.TOPDOWN
 var _active := false
 var _completed := false
+var _locked_state := false
 
 
 func _ready() -> void:
 	add_to_group("perspective_objects")
+	add_to_group("level_goal")
+	_locked_state = locked
 	body_entered.connect(_on_body_entered)
 	_sync_with_controller()
+	_apply_state()
+
+
+func unlock() -> void:
+	_locked_state = false
 	_apply_state()
 
 
@@ -41,7 +50,7 @@ func _sync_with_controller() -> void:
 
 
 func _apply_state() -> void:
-	_active = _mode == active_mode
+	_active = _mode == active_mode and not _locked_state
 	monitoring = _active
 	collision_shape.disabled = not _active
 	visual.modulate.a = 1.0 if _active else 0.24
