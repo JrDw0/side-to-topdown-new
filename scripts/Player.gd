@@ -18,6 +18,7 @@ var _last_safe_position := Vector2.ZERO
 var _gravity := 980.0
 var _movement_locked := false
 var _on_ice_surface := false
+var _collected_keys: Dictionary = {}
 
 
 func _ready() -> void:
@@ -67,6 +68,20 @@ func get_mode_sample_position() -> Vector2:
 
 func set_on_ice_surface(active: bool) -> void:
 	_on_ice_surface = active and _mode == PerspectiveModes.Mode.TOPDOWN
+
+
+func collect_key(key_id: StringName) -> void:
+	if String(key_id).is_empty():
+		return
+
+	_collected_keys[key_id] = true
+
+
+func has_key(key_id: StringName) -> bool:
+	if String(key_id).is_empty():
+		return true
+
+	return _collected_keys.has(key_id)
 
 
 func reset_to_safe_point() -> void:

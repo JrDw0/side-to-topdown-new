@@ -21,6 +21,15 @@ polygon = PackedVector2Array(-28, 0, -19, -8, 0, -12, 19, -8, 28, 0, 19, 8, 0, 1
 color = Color(0.35, 1, 0.42, 1)
 polygon = PackedVector2Array(-24, 48, -24, -48, 26, -34, 4, -10, 26, 14, -24, 14)
 
+[node name="LockedLabel" type="Label" parent="."]
+visible = false
+offset_left = -54.0
+offset_top = -74.0
+offset_right = 54.0
+offset_bottom = -50.0
+text = "需要钥匙"
+horizontal_alignment = 1
+
 [node name="PerspectiveVisual" type="Node2D" parent="."]
 script = ExtResource("2_visual")
 initial_mode = 1

@@ -1,0 +1,138 @@
+[gd_scene load_steps=15 format=3 uid="uid://bkbm0c5uwserj"]
+
+[ext_resource type="Script" uid="uid://blpmj6dyk4y3h" path="res://scripts/Level.gd" id="1_level"]
+[ext_resource type="Script" uid="uid://dxu64fm35kdhp" path="res://scripts/PerspectiveController.gd" id="2_controller"]
+[ext_resource type="Script" uid="uid://cugndu2cny5up" path="res://scripts/ModeBackdrop.gd" id="3_backdrop"]
+[ext_resource type="PackedScene" path="res://scenes/actors/Player.tscn" id="4_player"]
+[ext_resource type="PackedScene" path="res://scenes/mechanics/PerspectiveSwitch.tscn" id="5_switch"]
+[ext_resource type="PackedScene" path="res://scenes/objects/Goal.tscn" id="6_goal"]
+[ext_resource type="Script" uid="uid://clw1isornpnve" path="res://scripts/PerspectiveCamera.gd" id="7_camera"]
+[ext_resource type="PackedScene" path="res://scenes/objects/Key.tscn" id="8_key"]
+[ext_resource type="Texture2D" uid="uid://btx4ke54epbo0" path="res://assets/地面 墙纸tiles/壁纸.png" id="9_wallpaper"]
+[ext_resource type="PackedScene" path="res://scenes/objects/BrickBlock.tscn" id="10_brick_block"]
+[ext_resource type="PackedScene" path="res://scenes/mechanics/ModeWall.tscn" id="11_wall"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_left_bound"]
+size = Vector2(34, 720)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_right_bound"]
+size = Vector2(34, 720)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ceiling"]
+size = Vector2(1280, 32)
+
+[node name="Level06_KeyGoal" type="Node2D"]
+script = ExtResource("1_level")
+
+[node name="ModeBackdrop" type="Node2D" parent="."]
+script = ExtResource("3_backdrop")
+
+[node name="WallpaperTile" type="Sprite2D" parent="ModeBackdrop"]
+z_index = -1
+texture_filter = 1
+texture_repeat = 2
+scale = Vector2(0.125, 0.125)
+texture = ExtResource("9_wallpaper")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 10240, 5760)
+
+[node name="PerspectiveController" type="Node" parent="."]
+script = ExtResource("2_controller")
+
+[node name="KeyRouteTint" type="Polygon2D" parent="."]
+color = Color(1, 0.86, 0.22, 0.14)
+polygon = PackedVector2Array(515, 360, 775, 360, 775, 520, 515, 520)
+
+[node name="LockedExitTint" type="Polygon2D" parent="."]
+color = Color(1, 0.28, 0.14, 0.16)
+polygon = PackedVector2Array(1010, 520, 1175, 520, 1175, 650, 1010, 650)
+
+[node name="LeftFloor" parent="." instance=ExtResource("10_brick_block")]
+position = Vector2(285, 666)
+block_size = Vector2(570, 52)
+visual_modulate = Color(0.7, 0.74, 0.78, 1)
+
+[node name="MiddleFloor" parent="." instance=ExtResource("10_brick_block")]
+position = Vector2(710, 666)
+block_size = Vector2(260, 52)
+visual_modulate = Color(0.66, 0.71, 0.76, 1)
+
+[node name="RightFloor" parent="." instance=ExtResource("10_brick_block")]
+position = Vector2(1065, 666)
+block_size = Vector2(430, 52)
+visual_modulate = Color(0.7, 0.74, 0.78, 1)
+
+[node name="KeyPlatform" parent="." instance=ExtResource("10_brick_block")]
+position = Vector2(645, 520)
+block_size = Vector2(260, 38)
+visual_modulate = Color(0.78, 0.72, 0.48, 1)
+
+[node name="LeftBoundary" type="StaticBody2D" parent="."]
+position = Vector2(-17, 360)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftBoundary"]
+shape = SubResource("RectangleShape2D_left_bound")
+
+[node name="RightBoundary" type="StaticBody2D" parent="."]
+position = Vector2(1297, 360)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightBoundary"]
+shape = SubResource("RectangleShape2D_right_bound")
+
+[node name="CeilingBoundary" type="StaticBody2D" parent="."]
+position = Vector2(640, -16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CeilingBoundary"]
+shape = SubResource("RectangleShape2D_ceiling")
+
+[node name="PerspectiveSwitch" parent="." instance=ExtResource("5_switch")]
+position = Vector2(360, 590)
+
+[node name="TopdownGuideWallLeft" parent="." instance=ExtResource("11_wall")]
+position = Vector2(515, 440)
+scale = Vector2(1, 0.9)
+
+[node name="TopdownGuideWallRight" parent="." instance=ExtResource("11_wall")]
+position = Vector2(775, 440)
+scale = Vector2(1, 0.9)
+
+[node name="GateKey" parent="." instance=ExtResource("8_key")]
+position = Vector2(645, 455)
+key_id = &"exit_key"
+display_name = "出口钥匙"
+
+[node name="Goal" parent="." instance=ExtResource("6_goal")]
+position = Vector2(1110, 592)
+required_key_id = &"exit_key"
+
+[node name="Player" parent="." instance=ExtResource("4_player")]
+position = Vector2(135, 560)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+script = ExtResource("7_camera")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="WinLabel" type="Label" parent="CanvasLayer"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.0
+offset_top = -28.0
+offset_right = 140.0
+offset_bottom = 28.0
+text = "全部通关"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HintLabel" type="Label" parent="CanvasLayer"]
+offset_left = 32.0
+offset_top = 28.0
+offset_right = 560.0
+offset_bottom = 56.0
+text = "出口需要钥匙。按 E 切换俯视角取得钥匙。"
